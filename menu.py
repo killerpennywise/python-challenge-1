@@ -159,7 +159,7 @@ while place_order:
         keep_ordering = input("Would you like to keep ordering? (Y)es or (N)o ")
 
         # 5. Check the customer's input
-        match keep_ordering:
+        match keep_ordering.lower():
                # Keep ordering
             case 'y':
                 place_order = True
