@@ -136,9 +136,9 @@ while place_order:
 
                     # Check if the quantity is a number, default to 1 if not
                     if customer_quantity.isdigit():
-
+                        customer_quantity_int = int(customer_quantity)
                     # Add the item name, price, and quantity to the order list
-                        order.append({"Item name":item_nm,"Price":price,"Quantity":customer_quantity})
+                        order.append({"Item name":item_nm,"Price":price,"Quantity":customer_quantity_int})
     
                     # Tell the customer that their input isn't valid
                     else:
@@ -159,22 +159,23 @@ while place_order:
         keep_ordering = input("Would you like to keep ordering? (Y)es or (N)o ")
 
         # 5. Check the customer's input
-        if keep_ordering == 'y' or keep_ordering == 'Y':
-                # Keep ordering
-            print("Continuing order..")
+        match keep_ordering:
+               # Keep ordering
+            case 'y':
+                place_order = True
                 # Exit the keep ordering question loop
-            break
+                break
                 # Complete the order
-        elif keep_ordering == 'n' or keep_ordering == 'N':
+            case 'n':
                 # Since the customer decided to stop ordering, thank them for
                 # their order
-            print("Thank you for ordering!")
+                print("Thank you for ordering!")
                 # Exit the keep ordering question loop
-            place_order = False
-            break
+                place_order = False
+                break
                 # Tell the customer to try again
-        else:
-            print("Please try again.")
+            case _:
+                print("Please try again.")
 
 # Print out the customer's order
 print("This is what we are preparing for you.\n")
@@ -199,8 +200,11 @@ for i in range(len(order)):
     space_no = " " * no_item_spaces
 
     # 10. Print the item name, price, and quantity
-    print(f"{item_name}{space_no}|  ${price} | {quantity}")
+    print(f"{item_name}{space_no}| ${price}  | {quantity}")
 
 # 11. Calculate the cost of the order using list comprehension
 # Multiply the price by quantity for each item in the order list, then sum()
 # and print the prices.
+cost_list = [order[i]["Price"] * order[i]["Quantity"] for i in range(len(order))]
+total_cost = sum(cost_list)
+print(f"Total cost of the order: ${total_cost}")
